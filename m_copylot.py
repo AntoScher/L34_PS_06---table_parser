@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-from main import company
+from main_zer import company
 
 # Создаем драйвер для Chrome
 driver = webdriver.Chrome()
