@@ -33,7 +33,9 @@ def find_elements_with_classes():
                 if class_attr:
                     class_names = class_attr.split()
                     if all(class_name in class_names for class_name in ['ui-GPFV8', 'qUioe', 'ProductName', 'ActiveProduct']):
-                        print(f'Текст: {element.text.strip()}')
+                        text_content = element.text.strip()
+                        if text_content:  # Удаляем элементы с пустыми значениями
+                            print(f'Наименование: {text_content}')
             except StaleElementReferenceException:
                 elements = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, '*')))
                 break
@@ -43,12 +45,25 @@ def find_elements_with_classes():
 # Вызов функции для элементов с указанными классами
 find_elements_with_classes()
 
+# Поиск новой группы элементов <span> с классами и вложенными элементами
+def find_elements_with_price():
+    elements = driver.find_elements(By.CSS_SELECTOR, 'span.ui-LD-ZU.KIkOH[data-testid="price"]')
+    for element in elements:
+        text_content = element.text.strip()
+        if text_content:  # Удаляем элементы с пустыми значениями
+            print(f'Цена: {text_content}')
+
+# Вызов функции для элементов с классом price и вложенными элементами
+find_elements_with_price()
+
 # Найти все элементы ссылки с атрибутом href и избежать ошибки stale element
 def find_elements_with_href():
     elements = driver.find_elements(By.CSS_SELECTOR, 'a.ui-GPFV8.qUioe.ProductName.ActiveProduct[href]')
     for element in elements:
         try:
-            print(f'HREF: {element.get_attribute("href")}')
+            href_content = element.get_attribute("href").strip()
+            if href_content:  # Удаляем элементы с пустыми значениями
+                print(f'Линк: {href_content}')
         except StaleElementReferenceException:
             elements = driver.find_elements(By.CSS_SELECTOR, 'a.ui-GPFV8.qUioe.ProductName.ActiveProduct[href]')
             break
